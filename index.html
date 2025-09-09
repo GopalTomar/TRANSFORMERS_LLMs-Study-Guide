@@ -1,0 +1,1024 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transformers & LLMs - Complete Study Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .main-topic {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            margin: 30px 0;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .main-topic:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(0,0,0,0.2);
+        }
+
+        .main-topic::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            transform: rotate(45deg);
+            transition: all 0.6s;
+            opacity: 0;
+        }
+
+        .main-topic:hover::before {
+            animation: shine 0.6s ease-in-out;
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); opacity: 0; }
+        }
+
+        .main-topic h2 {
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .topic-icon {
+            font-size: 1.5em;
+        }
+
+        .subtopics {
+            display: none;
+            margin-top: 20px;
+            background: rgba(255,255,255,0.95);
+            color: #333;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: inset 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .subtopics.active {
+            display: block;
+            animation: slideDown 0.3s ease-out;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .subtopic-category {
+            margin: 20px 0;
+            padding: 20px;
+            border-left: 4px solid #667eea;
+            background: linear-gradient(90deg, rgba(102, 126, 234, 0.05) 0%, transparent 100%);
+            border-radius: 0 8px 8px 0;
+        }
+
+        .subtopic-category h3 {
+            color: #667eea;
+            font-size: 1.3em;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .subtopic-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 15px;
+        }
+
+        .subtopic-item {
+            background: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+            border-left: 3px solid #764ba2;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .subtopic-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+            border-left-color: #667eea;
+        }
+
+        .subtopic-item h4 {
+            color: #2c3e50;
+            font-size: 1.1em;
+            margin-bottom: 8px;
+        }
+
+        .subtopic-item p {
+            color: #666;
+            font-size: 0.9em;
+            line-height: 1.5;
+        }
+
+        .key-concepts {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 25px;
+            margin: 10px 5px;
+            display: inline-block;
+            font-size: 0.9em;
+            font-weight: 500;
+            box-shadow: 0 3px 10px rgba(240, 147, 251, 0.3);
+            transition: all 0.2s ease;
+        }
+
+        .key-concepts:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(240, 147, 251, 0.4);
+        }
+
+        .learning-path {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        .learning-path h3 {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+        }
+
+        .path-steps {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .path-step {
+            background: rgba(255,255,255,0.2);
+            padding: 12px 20px;
+            border-radius: 25px;
+            font-size: 0.9em;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .download-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+        }
+
+        .toggle-indicator {
+            transition: transform 0.3s ease;
+        }
+
+        .toggle-indicator.rotated {
+            transform: rotate(180deg);
+        }
+
+        @media (max-width: 768px) {
+            .header h1 { font-size: 2em; }
+            .content { padding: 20px; }
+            .subtopic-list { grid-template-columns: 1fr; }
+            .path-steps { flex-direction: column; }
+            .download-btn { position: static; margin: 20px auto; display: block; }
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background: #e0e0e0;
+            border-radius: 2px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            width: 0%;
+            border-radius: 2px;
+            transition: width 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <button class="download-btn" onclick="downloadHTML()">📥 Download Guide</button>
+    
+    <div class="container">
+        <div class="header">
+            <h1>🤖 Transformers & LLMs Complete Study Guide</h1>
+            <p>From CNNs to GPT-4: Your Complete Deep Learning Journey</p>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="learning-path">
+                <h3>🎯 Recommended Learning Path</h3>
+                <div class="path-steps">
+                    <div class="path-step">1. Image Processing</div>
+                    <div class="path-step">2. CNNs</div>
+                    <div class="path-step">3. Representation Learning</div>
+                    <div class="path-step">4. Sequential Models</div>
+                    <div class="path-step">5. Attention</div>
+                    <div class="path-step">6. Transformers</div>
+                </div>
+            </div>
+
+            <!-- Computer Vision & CNNs -->
+            <div class="main-topic" onclick="toggleTopic(this)">
+                <h2><span class="topic-icon">🖼️</span> Computer Vision & CNNs <span class="toggle-indicator">▼</span></h2>
+                <div class="subtopics">
+                    <div class="subtopic-category">
+                        <h3>Image Fundamentals</h3>
+                        <div class="subtopic-list">
+                            <div class="subtopic-item">
+                                <h4>Image Representation</h4>
+                                <p>Images as matrices, pixel values, grayscale vs color, spatial arrangement of numbers</p>
+                            </div>
+                            <div class="subtopic-item">
+                                <h4>Image Transformations</h4>
+                                <p>Matrix operations on images, photo editing as matrix transformations</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="subtopic-category">
+                        <h3>Biological Inspiration</h3>
+                        <div class="subtopic-list">
+                            <div class="subtopic-item">
+                                <h4>Hubel & Wiesel Experiments</h4>
+                                <p>Cat visual cortex studies, receptive fields, orientation selectivity</p>
+                            </div>
+                            <div class="subtopic-item">
+                                <h4>Visual Cortex Hierarchy</h4>
+                                <p>Simple cells, complex cells, hierarchical feature extraction</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="subtopic-category">
+                        <h3>Convolution Operations</h3>
+                        <div class="subtopic-list">
+                            <div class="subtopic-item">
+                                <h4>2D Convolution</h4>
+                                <p>Kernel operations, sliding windows, feature maps generation</p>
+                            </div>
+                            <div class="subtopic-item">
+                                <h4>Kernels & Filters</h4>
+                                <p>Edge detection, feature extractors, hand-crafted vs learned filters</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="subtopic-category">
+                        <h3>CNN Architecture</h3>
+                        <div class="subtopic-list">
+                            <div class="subtopic-item">
+                                <h4>Convolutional Layers</h4>
+                                <p>Parameter sharing, local connectivity, filter weights as parameters</p>
+                            </div>
+                            <div class="subtopic-item">
+                                <h4>Pooling Layers</h4>
+                                <p>Max pooling, average pooling, translation invariance, down-sampling</p>
+                            </div>
+                            <div class="subtopic-item">
+                                <h4>Feature Learning</h4>
+                                <p>Hierarchical features: edges → shapes → objects</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="key-concepts">Parameter Sharing</div>
+                    <div class="key-concepts">Translation Invariance</div>
+                    <div class="key-concepts">Local Receptive Fields</div>
+                    <div class="key-concepts">Feature Hierarchies</div>
+                </div>
+            </div>
+
+            <!-- Representation Learning -->
+            <div class="main-topic" onclick="toggleTopic(this)">
+                <h2><span class="topic-icon">🧠</span> Representation Learning <span class="toggle-indicator">▼</span></h2>
+                <div class="subtopics">
+                    <div class="subtopic-category">
+                        <h3>Feature Engineering vs Feature Learning</h3>
+                        <div class="subtopic-list">
+                            <div class="subtopic-item">
+                                <h4>Manual Feature Engineering</h4>
+                                <p>Feature selection, transformation, encoding, domain knowledge</p>
+                            </div>
+                            <div class="subtopic-item">
+                                <h4>Automatic Feature Learning</h4>
+                                <p>Deep learning approach, end-to-end learning, learned representations</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="subtopic-category">
+                        <h3>Autoencoders</h3>
+                        <div class="subtopic-list">
+                            <div class="subtopic-item">
+                                <h4>Encoder-Decoder Architecture</h4>
+                                <p>Compression to latent space, reconstruction, bottleneck layers</p>
+                            </div>
+                            <div class="subtopic-item">
+                                <h4>Applications</h4>
+                                <p>Dimensionality reduction, denoising, anomaly detection</p>
+                            </div>
+                            <div class="subtopic-item">
+                                <h4>PCA vs Autoencoders</h4>
+                                <p>Linear vs nonlinear, representation quality comparison</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="subtopic-category">
+                        <h3>U-Net Architecture</h3>
+                        <div class="subtopic-list">
+                            <div class="subtopic-item">
+                                <h4>Skip Connections</h4>
+                                <p>Encoder-decoder bridges, spatial detail preservation</p>
+                            </div>
+                            <div class="subtopic-item">
+                                <h4>Image-to-Image Tasks</h4>
+                                <p>Segmentation, inpainting, super-resolution, pixel-wise transformations</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="subtopic-category">
+                        <h3>Word Embeddings</h3>
+                        <div class="subtopic-list">
+                            <div class="subtopic-item">
+                                <h4>From One-Hot to Dense Vectors</h4>
+                                <p>Bag of words limitations, sparse vs dense representations</p>
+                            </div>
+                            <div class="subtopic-item">
+                                <h4>Word2Vec</h4>
+                                <p>CBOW, Skip-gram, negative sampling, self-supervised learning</p>
+                            </div>
+                            <div class="subtopic-item">
+                                <h4>Semantic Similarity</h4>
+                                <p>Vector spaces, cosine similarity, analogies, contextual relationships</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="key-concepts">Latent Space</div>
+                    <div class="key-concepts">Self-Supervised Learning</div>
+                    <div class="key-concepts">Semantic Embeddings</div>
+                    <div class="key-concepts">Skip Connections</div>
+                </div>
+            </div>
+
+            <!-- Sequential Data & RNNs -->
+            <div class="main-topic" onclick="toggleTopic(this)">
+                <h2><span class="topic-icon">📈</span> Sequential Data & RNNs <span class="toggle-indicator">▼</span></h2>
+                <div class="subtopics">
+                    <div class="subtopic-category">
+                        <h3>Sequential Data Characteristics</h3>
+                        <div class="subtopic-list">
+                            <div class="subtopic-item">
+                                <h4>Order Dependencies</h4>
+                                <p>Time series, natural language, speech, music, DNA sequences</p>
+                            </div>
+                            <div class="subtopic-item">
+                                <h4>Memory & Context</h4>
+                                <p>Persistence, temporal relationships, contextual understanding</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="subtopic-category">
+                        <h3>RNN Architecture</h3>
+                        <div class="subtopic-list">
+                            <div class="subtopic-item">
+                                <h4>Hidden State</h4>
+                                <p>Memory mechanism, state updates, information retention</p>
+                            </div>
+                            <div class="subtopic-item">
+                                <h4>Parameter Sharing</h4>
+                                <p>Weight matrices (U, V, W), shared across time steps</p>
+                            </div>
+                            <div class="subtopic-item">
+                                <h4>Unrolling Through Time</h4>
+                                <p>Computational graph, backpropagation through time</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="subtopic-category">
+                        <h3>Seq2Seq Variants</h3>
+                        <div class="subtopic-list">
+                            <div class="subtopic-item">
+                                <h4>One-to-One</h4>
+                                <p>Traditional classification, fixed input-output</p>
+                            </div>
+                            <div class="subtopic-item">
+                                <h4>One-to-Many</h4>
+                                <p>Image captioning, sequence generation</p>
+                            </div>
+                            <div class="subtopic-item">
+                                <h4>Many-to-One</h4>
+                                <p>Sentiment analysis, sequence classification</p>
+                            </div>
+                            <div class="subtopic-item">
+                                <h4>Many-to-Many</h4>
+                                <p>Machine translation, synchronized/unsynchronized sequences</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="subtopic-category">
+                        <h3>Training Challenges</h3>
+                        <div class="subtopic-list">
+                            <div class="subtopic-item">
+                                <h4>Vanishing Gradients</h4>
+                                <p>Long sequences, sigmoid derivatives, gradient decay</p>
+                            </div>
+                            <div class="subtopic-item">
+                                <h4>Exploding Gradients</h4>
+                                <p>Gradient clipping, weight regularization, careful initialization</p>
+                            </div>
+                            <div class="subtopic-item">
+                                <h4>LSTM Solutions</h4>
+                                <p>Gating mechanisms, cell state, forget/input/output gates</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="key-concepts">Hidden States</div>
+                    <div class="key-concepts">Vanishing Gradients</div>
+                    <div class="key-concepts">LSTM Gating</div>
+                    <div class="key-concepts">Encoder-Decoder</div>
+                </div>
+            </div>
+
+            <!-- Attention Mechanism -->
+            <div class="main-topic" onclick="toggleTopic(this)">
+                <h2><span class="topic-icon">👁️</span> Attention Mechanism <span class="toggle-indicator">▼</span></h2>
+                <div class="subtopics">
+                    <div class="subtopic-category">
+                        <h3>Attention Fundamentals</h3>
+                        <div class="subtopic-list">
+                            <div class="subtopic-item">
+                                <h4>Problems with Fixed Context</h4>
+                                <p>Information bottleneck, long sequences, lossy compression</p>
+                            </div>
+                            <div class="subtopic-item">
+                                <h4>Dynamic Context</h4>
+                                <p>Multiple context vectors, selective attention, relevance weighting</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="subtopic-category">
+                        <h3>Attention Mathematics</h3>
+                        <div class="subtopic-list">
+                            <div class="subtopic-item">
+                                <h4>Query-Key-Value</h4>
+                                <p>Q: what I'm looking for, K: what I offer, V: what I carry</p>
+                            </div>
+                            <div class="subtopic-item">
+                                <h4>Attention Computation</h4>
+                                <p>Dot product similarity, softmax normalization, weighted sum</p>
+                            </div>
+                            <div class="subtopic-item">
+                                <h4>Attention Weights</h4>
+                                <p>Relevance scores, interpretability, attention visualization</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="subtopic-category">
+                        <h3>Attention Types</h3>
+                        <div class="subtopic-list">
+                            <div class="subtopic-item">
+                                <h4>Cross-Attention</h4>
+                                <p>Encoder-decoder attention, machine translation, source-target alignment</p>
+                            </div>
+                            <div class="subtopic-item">
+                                <h4>Self-Attention</h4>
+                                <p>Token-to-token within sequence, contextual embeddings, bidirectional</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="subtopic-category">
+                        <h3>Multi-Head Attention</h3>
+                        <div class="subtopic-list">
+                            <div class="subtopic-item">
+                                <h4>Multiple Perspectives</h4>
+                                <p>Parallel attention heads, different relationship types</p>
+                            </div>
+                            <div class="subtopic-item">
+                                <h4>Attention Ensemble</h4>
+                                <p>Concatenation, projection, comprehensive understanding</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="subtopic-category">
+                        <h3>Contextual Embeddings</h3>
+                        <div class="subtopic-list">
+                            <div class="subtopic-item">
+                                <h4>Dynamic Representations</h4>
+                                <p>Context-dependent meaning, polysemy handling</p>
+                            </div>
+                            <div class="subtopic-item">
+                                <h4>Long-Range Dependencies</h4>
+                                <p>Direct connections, parallel processing, gradient flow</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="key-concepts">Query-Key-Value</div>
+                    <div class="key-concepts">Dot-Product Attention</div>
+                    <div class="key-concepts">Multi-Head</div>
+                    <div class="key-concepts">Contextual Embeddings</div>
+                </div>
+            </div>
+
+            <!-- Transformers -->
+            <div class="main-topic" onclick="toggleTopic(this)">
+                <h2><span class="topic-icon">🔄</span> Transformer Architecture <span class="toggle-indicator">▼</span></h2>
+                <div class="subtopics">
+                    <div class="subtopic-category">
+                        <h3>Transformer Block</h3>
+                        <div class="subtopic-list">
+                            <div class="subtopic-item">
+                                <h4>Multi-Head Self-Attention</h4>
+                                <p>Token interactions, parallel heads, attention mechanisms</p>
+                            </div>
+                            <div class="subtopic-item">
+                                <h4>Position-wise FFN</h4>
+                                <p>Independent transformations, non-linearity, feature refinement</p>
+                            </div>
+                            <div class="subtopic-item">
+                                <h4>Residual Connections</h4>
+                                <p>Skip connections, gradient flow, training stability</p>
+                            </div>
+                            <div class="subtopic-item">
+                                <h4>Layer Normalization</h4>
+                                <p>Training stability, normalization across features</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="subtopic-category">
+                        <h3>Positional Encoding</h3>
+                        <div class="subtopic-list">
+                            <div class="subtopic-item">
+                                <h4>Position Information</h4>
+                                <p>Sinusoidal encoding, learned embeddings, sequence order</p>
+                            </div>
+                            <div class="subtopic-item">
+                                <h4>Permutation Invariance</h4>
+                                <p>Self-attention properties, order injection methods</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="subtopic-category">
+                        <h3>Architectural Variants</h3>
+                        <div class="subtopic-list">
+                            <div class="subtopic-item">
+                                <h4>Encoder-Only (BERT)</h4>
+                                <p>Bidirectional context, masked language modeling, representation learning</p>
+                            </div>
+                            <div class="subtopic-item">
+                                <h4>Decoder-Only (GPT)</h4>
+                                <p>Causal attention, autoregressive generation, text completion</p>
+                            </div>
+                            <div class="subtopic-item">
+                                <h4>Encoder-Decoder</h4>
+                                <p>Translation, cross-attention, seq2seq tasks</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="key-concepts">Self-Attention Blocks</div>
+                    <div class="key-concepts">Positional Encoding</div>
+                    <div class="key-concepts">Layer Normalization</div>
+                    <div class="key-concepts">Residual Connections</div>
+                </div>
+            </div>
+
+            <!-- Large Language Models -->
+            <div class="main-topic" onclick="toggleTopic(this)">
+                <h2><span class="topic-icon">🤖</span> Large Language Models <span class="toggle-indicator">▼</span></h2>
+                <div class="subtopics">
+                    <div class="subtopic-category">
+                        <h3>BERT (Encoder-Only)</h3>
+                        <div class="subtopic-list">
+                            <div class="subtopic-item">
+                                <h4>Masked Language Modeling</h4>
+                                <p>Bidirectional training, token prediction, self-supervised learning</p>
+                            </div>
+                            <div class="subtopic-item">
+                                <h4>Contextual Embeddings</h4>
+                                <p>Dynamic word representations, polysemy handling</p>
+                            </div>
+                            <div class="subtopic-item">
+                                <h4>Transfer Learning</h4>
+                                <p>Pre-training, fine-tuning, downstream tasks</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="subtopic-category">
+                        <h3>GPT Series (Decoder-Only)</h3>
+                        <div class="subtopic-list">
+                            <div class="subtopic-item">
+                                <h4>Causal Language Modeling</h4>
+                                <p>Left-to-right generation, next token prediction</p>
+                            </div>
+                            <div class="subtopic-item">
+                                <h4>GPT Evolution</h4>
+                                <p>GPT-1 (117M) → GPT-2 (1.5B) → GPT-3 (175B) → GPT-4</p>
+                            </div>
+                            <div class="subtopic-item">
+                                <h4>Emergent Abilities</h4>
+                                <p>Few-shot learning, zero-shot tasks, scaling effects</p>
+                            </div>
+                            <div class="subtopic-item">
+                                <h4>ChatGPT & RLHF</h4>
+                                <p>Instruction tuning, human feedback, conversation optimization</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="subtopic-category">
+                        <h3>Training Paradigms</h3>
+                        <div class="subtopic-list">
+                            <div class="subtopic-item">
+                                <h4>Pre-training</h4>
+                                <p>Large corpus training, language modeling objectives</p>
+                            </div>
+                            <div class="subtopic-item">
+                                <h4>Fine-tuning</h4>
+                                <p>Task-specific adaptation, supervised learning, domain specialization</p>
+                            </div>
+                            <div class="subtopic-item">
+                                <h4>In-Context Learning</h4>
+                                <p>Few-shot prompting, demonstration-based learning, prompt engineering</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="subtopic-category">
+                        <h3>Generative AI Applications</h3>
+                        <div class="subtopic-list">
+                            <div class="subtopic-item">
+                                <h4>Text Generation</h4>
+                                <p>Creative writing, code generation, content creation</p>
+                            </div>
+                            <div class="subtopic-item">
+                                <h4>Conversational AI</h4>
+                                <p>Chatbots, dialogue systems, multi-turn conversations</p>
+                            </div>
+                            <div class="subtopic-item">
+                                <h4>Task Automation</h4>
+                                <p>Question answering, summarization, translation</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="key-concepts">Autoregressive Generation</div>
+                    <div class="key-concepts">Transfer Learning</div>
+                    <div class="key-concepts">Emergent Abilities</div>
+                    <div class="key-concepts">Scale Effects</div>
+                </div>
+            </div>
+
+            <!-- Advanced Topics -->
+            <div class="main-topic" onclick="toggleTopic(this)">
+                <h2><span class="topic-icon">🚀</span> Advanced Concepts & Applications <span class="toggle-indicator">▼</span></h2>
+                <div class="subtopics">
+                    <div class="subtopic-category">
+                        <h3>Training Optimization</h3>
+                        <div class="subtopic-list">
+                            <div class="subtopic-item">
+                                <h4>Gradient Problems</h4>
+                                <p>Vanishing/exploding gradients, solutions, LSTM gates</p>
+                            </div>
+                            <div class="subtopic-item">
+                                <h4>Regularization</h4>
+                                <p>Dropout, weight decay, batch normalization</p>
+                            </div>
+                            <div class="subtopic-item">
+                                <h4>Optimization Techniques</h4>
+                                <p>Adam, RMSprop, learning rate scheduling</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="subtopic-category">
+                        <h3>Model Interpretability</h3>
+                        <div class="subtopic-list">
+                            <div class="subtopic-item">
+                                <h4>Attention Visualization</h4>
+                                <p>Attention heatmaps, model interpretability, explainability</p>
+                            </div>
+                            <div class="subtopic-item">
+                                <h4>Feature Analysis</h4>
+                                <p>Learned representations, feature hierarchies, activation patterns</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="subtopic-category">
+                        <h3>Computational Efficiency</h3>
+                        <div class="subtopic-list">
+                            <div class="subtopic-item">
+                                <h4>Parallelization</h4>
+                                <p>Matrix operations, GPU acceleration, batch processing</p>
+                            </div>
+                            <div class="subtopic-item">
+                                <h4>Memory Management</h4>
+                                <p>Gradient checkpointing, model sharding, efficient attention</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="subtopic-category">
+                        <h3>Model Scaling</h3>
+                        <div class="subtopic-list">
+                            <div class="subtopic-item">
+                                <h4>Parameter Scaling</h4>
+                                <p>Model size effects, compute requirements, performance scaling</p>
+                            </div>
+                            <div class="subtopic-item">
+                                <h4>Data Scaling</h4>
+                                <p>Training corpus size, data quality, scaling laws</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="key-concepts">Gradient Flow</div>
+                    <div class="key-concepts">Model Interpretability</div>
+                    <div class="key-concepts">Computational Efficiency</div>
+                    <div class="key-concepts">Scaling Laws</div>
+                </div>
+            </div>
+
+            <!-- Practical Applications -->
+            <div class="main-topic" onclick="toggleTopic(this)">
+                <h2><span class="topic-icon">💼</span> Real-World Applications <span class="toggle-indicator">▼</span></h2>
+                <div class="subtopics">
+                    <div class="subtopic-category">
+                        <h3>Computer Vision Applications</h3>
+                        <div class="subtopic-list">
+                            <div class="subtopic-item">
+                                <h4>Image Classification</h4>
+                                <p>Object recognition, medical imaging, quality control</p>
+                            </div>
+                            <div class="subtopic-item">
+                                <h4>Image Segmentation</h4>
+                                <p>Medical imaging, autonomous driving, satellite imagery</p>
+                            </div>
+                            <div class="subtopic-item">
+                                <h4>Object Detection</h4>
+                                <p>Real-time detection, surveillance, robotics</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="subtopic-category">
+                        <h3>NLP Applications</h3>
+                        <div class="subtopic-list">
+                            <div class="subtopic-item">
+                                <h4>Machine Translation</h4>
+                                <p>Language pairs, real-time translation, cross-lingual understanding</p>
+                            </div>
+                            <div class="subtopic-item">
+                                <h4>Text Summarization</h4>
+                                <p>Extractive/abstractive, document processing, news aggregation</p>
+                            </div>
+                            <div class="subtopic-item">
+                                <h4>Question Answering</h4>
+                                <p>Information retrieval, knowledge bases, conversational AI</p>
+                            </div>
+                            <div class="subtopic-item">
+                                <h4>Sentiment Analysis</h4>
+                                <p>Social media monitoring, customer feedback, market research</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="subtopic-category">
+                        <h3>Generative Applications</h3>
+                        <div class="subtopic-list">
+                            <div class="subtopic-item">
+                                <h4>Content Creation</h4>
+                                <p>Writing assistance, code generation, creative content</p>
+                            </div>
+                            <div class="subtopic-item">
+                                <h4>Image Generation</h4>
+                                <p>Style transfer, image synthesis, artistic applications</p>
+                            </div>
+                            <div class="subtopic-item">
+                                <h4>Conversational AI</h4>
+                                <p>Virtual assistants, customer service, educational tutoring</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="key-concepts">Transfer Learning</div>
+                    <div class="key-concepts">Domain Adaptation</div>
+                    <div class="key-concepts">Multi-Modal</div>
+                    <div class="key-concepts">Real-Time Processing</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        let openTopics = 0;
+        const totalTopics = document.querySelectorAll('.main-topic').length;
+
+        function toggleTopic(element) {
+            const subtopics = element.querySelector('.subtopics');
+            const indicator = element.querySelector('.toggle-indicator');
+            
+            if (subtopics.classList.contains('active')) {
+                subtopics.classList.remove('active');
+                indicator.classList.remove('rotated');
+                openTopics--;
+            } else {
+                subtopics.classList.add('active');
+                indicator.classList.add('rotated');
+                openTopics++;
+            }
+            
+            updateProgress();
+        }
+
+        function updateProgress() {
+            const progressFill = document.getElementById('progressFill');
+            const progress = (openTopics / totalTopics) * 100;
+            progressFill.style.width = progress + '%';
+        }
+
+        function downloadHTML() {
+            const htmlContent = document.documentElement.outerHTML;
+            const blob = new Blob([htmlContent], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'transformers-llms-study-guide.html';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        // Add smooth scrolling for better UX
+        document.querySelectorAll('.main-topic').forEach(topic => {
+            topic.addEventListener('click', function(e) {
+                e.preventDefault();
+                this.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            });
+        });
+
+        // Add keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.subtopics.active').forEach(subtopic => {
+                    subtopic.classList.remove('active');
+                    subtopic.parentElement.querySelector('.toggle-indicator').classList.remove('rotated');
+                });
+                openTopics = 0;
+                updateProgress();
+            }
+        });
+
+        // Add search functionality
+        function addSearchFeature() {
+            const searchContainer = document.createElement('div');
+            searchContainer.style.cssText = `
+                position: sticky;
+                top: 20px;
+                background: white;
+                padding: 20px;
+                margin: 20px 0;
+                border-radius: 10px;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+                z-index: 100;
+            `;
+            
+            const searchInput = document.createElement('input');
+            searchInput.type = 'text';
+            searchInput.placeholder = 'Search topics and concepts...';
+            searchInput.style.cssText = `
+                width: 100%;
+                padding: 15px;
+                border: 2px solid #667eea;
+                border-radius: 25px;
+                font-size: 16px;
+                outline: none;
+            `;
+            
+            searchContainer.appendChild(searchInput);
+            document.querySelector('.content').insertBefore(searchContainer, document.querySelector('.learning-path'));
+            
+            searchInput.addEventListener('input', function(e) {
+                const searchTerm = e.target.value.toLowerCase();
+                const topics = document.querySelectorAll('.main-topic');
+                
+                topics.forEach(topic => {
+                    const text = topic.textContent.toLowerCase();
+                    if (text.includes(searchTerm) || searchTerm === '') {
+                        topic.style.display = 'block';
+                    } else {
+                        topic.style.display = 'none';
+                    }
+                });
+            });
+        }
+        
+        // Initialize search feature
+        addSearchFeature();
+    </script>
+</body>
+</html>
